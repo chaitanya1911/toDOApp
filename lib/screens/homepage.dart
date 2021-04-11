@@ -23,11 +23,12 @@ class _HomepageState extends State<Homepage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(bottom: 32, top: 10),
-                    child: Image(
-                      image: AssetImage('assets/images/logo.png'),
-                    ),
-                  ),
+                      margin: EdgeInsets.only(bottom: 25, top: 20),
+                      child: Text(
+                        "Your todo are as follows : ",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      )),
                   Expanded(
                       child: FutureBuilder(
                     initialData: [],
@@ -41,14 +42,19 @@ class _HomepageState extends State<Homepage> {
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Taskpage(
-                                                task: snapshot.data[index],
-                                              )));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Taskpage(
+                                        task: snapshot.data[index],
+                                      ),
+                                    ),
+                                  ).then((value) {
+                                    setState(() {});
+                                  });
                                 },
                                 child: TaskCardWidget(
                                   title: snapshot.data[index].title,
+                                  discription: snapshot.data[index].discription,
                                 ),
                               );
                             }),
@@ -58,7 +64,7 @@ class _HomepageState extends State<Homepage> {
                 ],
               ),
               Positioned(
-                  bottom: 10,
+                  bottom: 25,
                   right: 0,
                   child: GestureDetector(
                     onTap: () {

@@ -6,12 +6,9 @@ import 'models/task.dart';
 
 class DatabaseHelper {
   Future<Database> database() async {
-    print("IN Database");
     return openDatabase(
-      join(await getDatabasesPath(), 'todo2.db'),
+      join(await getDatabasesPath(), 'todo.db'),
       onCreate: (db, version) async {
-        print(
-            "IN Database2 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         await db.execute(
             "CREATE TABLE tasks(id INTEGER PRIMARY KEY, title TEXT, discription TEXT)");
         await db.execute(
@@ -22,7 +19,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> insertTask(Task task) async {
+  Future<int> insertTask(Task task) async {
     int taskId = 0;
     Database _db = await database();
     await _db
@@ -32,6 +29,26 @@ class DatabaseHelper {
       taskId = value;
     });
     return taskId;
+  }
+
+  Future<void> updateTaskTitle(int id, String newtitle) async {
+    Database _db = await database();
+    _db.rawQuery("UPDATE tasks SET title='$newtitle' where id='$id'");
+  }
+
+  Future<void> updateTodoDone(int id, int isDone) async {
+    Database _db = await database();
+    _db.rawQuery("UPDATE todo SET isDone='$isDone' where id='$id'");
+  }
+
+  Future<void> updateDiscriptionTitle(int id, String discription) async {
+    Database _db = await database();
+    _db.rawQuery("UPDATE tasks SET discription='$discription' where id='$id'");
+  }
+
+  Future<void> updateTodoTitle(int id, String title) async {
+    Database _db = await database();
+    _db.rawQuery("UPDATE tasks SET title='$title' where id='$id'");
   }
 
   Future<void> insertTodo(Todo todo) async {
@@ -56,6 +73,14 @@ class DatabaseHelper {
     await _db.delete(
       'tasks',
       where: 'id=$taskid',
+    );
+  }
+
+  Future<void> deleteTodo(int todoid) async {
+    Database _db = await database();
+    await _db.delete(
+      'todo',
+      where: 'id=$todoid',
     );
   }
 

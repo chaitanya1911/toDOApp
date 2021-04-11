@@ -14,7 +14,7 @@ class TaskCardWidget extends StatelessWidget {
         horizontal: 24,
       ),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          color: Colors.grey[300], borderRadius: BorderRadius.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,8 +54,8 @@ class TodoWidget extends StatelessWidget {
               width: 20,
               margin: EdgeInsets.only(right: 12),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: isDone ? Colors.blue : Colors.black,
+                  borderRadius: BorderRadius.circular(5),
+                  color: isDone ? Colors.blue : Colors.transparent,
                   border: isDone
                       ? null
                       : Border.all(color: Colors.black, width: 1.5)),
@@ -65,17 +65,15 @@ class TodoWidget extends StatelessWidget {
                     )
                   : null,
             ),
-            Container(
+            Flexible(
               child: Text(
-                "$isDone",
+                text ?? "Unnamed todowidget",
+                style: TextStyle(
+                    decoration: isDone ? TextDecoration.lineThrough : null,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: isDone ? Colors.black : Colors.grey),
               ),
-            ),
-            Text(
-              text ?? "Unnamed todowidget",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: isDone ? Colors.black : Colors.grey),
             ),
           ],
         ));
