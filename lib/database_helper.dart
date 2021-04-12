@@ -12,7 +12,7 @@ class DatabaseHelper {
         await db.execute(
             "CREATE TABLE tasks(id INTEGER PRIMARY KEY, title TEXT, discription TEXT)");
         await db.execute(
-            "CREATE TABLE todo(id INTEGER PRIMARY KEY, title TEXT, isDone INTEGER,taskID INTEGER)");
+            "CREATE TABLE todo(id INTEGER PRIMARY KEY, title TEXT, isDone INTEGER,FOREIGN KEY (taskID)REFERENCES tasks (id)ON DELETE CASCADE)");
         return db;
       },
       version: 1,
@@ -73,6 +73,10 @@ class DatabaseHelper {
     await _db.delete(
       'tasks',
       where: 'id=$taskid',
+    );
+    await _db.delete(
+      'todo',
+      where: 'taskID=$taskid',
     );
   }
 
